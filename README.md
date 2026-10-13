@@ -3,7 +3,7 @@ This is a music playlist made in Python, with a GUI made using pyFLTK.
 
 This program allows you to add and remove songs from your files, as well as navigate through your curated playlist.
 
-## Screenshot of Gameplay
+## Screenshot of Project
 <img width="675" height="743" alt="music-playlist-ss" src="https://github.com/user-attachments/assets/5a6a1ed6-7205-4dbd-8d14-9633e73821a0" />
 
 ## About Project:
