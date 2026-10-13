@@ -35,9 +35,10 @@ Building this project gave me a lot more experience working with subprocessors a
 
 ## How to Run Program:
 1. Start the Program
+   
    python3 playlist.py
 
-2. Using Playlist
+3. Using Playlist:
 - Download a few mp3 files (some are provided in this repo)
 - Click the add option and select a directory containing your audio
 - Click on a song to select it and press the play button
