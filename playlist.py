@@ -1,5 +1,23 @@
 import os
-from fltk import Fl_Button, Fl_Window, Fl, Fl_Hold_Browser, Fl_Menu_Bar, Fl_File_Browser, Fl_File_Chooser, FL_SINGLE, fl_dir_chooser, Fl_Output, Fl_add_handler, FL_SHORTCUT, Fl_event_key, FL_YELLOW, Fl_Text_Display, Fl_Return_Button, Fl_Group
+from fltk import (
+    Fl_Button,
+    Fl_Window,
+    Fl,
+    Fl_Hold_Browser,
+    Fl_Menu_Bar,
+    Fl_File_Browser,
+    Fl_File_Chooser,
+    FL_SINGLE,
+    fl_dir_chooser,
+    Fl_Output,
+    Fl_add_handler,
+    FL_SHORTCUT,
+    Fl_event_key,
+    FL_YELLOW,
+    Fl_Text_Display,
+    Fl_Return_Button,
+    Fl_Group,
+)
 import subprocess as sp
 import signal
 
@@ -9,6 +27,7 @@ class SongList(Fl_Hold_Browser):
     holds a list of all the songs the user can play, and has functionality
     to add/remove songs
     """
+
     def __init__(self, window, *args):
         super().__init__(*args)
         self.window = window
@@ -24,7 +43,7 @@ class SongList(Fl_Hold_Browser):
 
     def choose_music_dir(self):
         music_dir = fl_dir_chooser(".", "")
-        print('user chose', music_dir)
+        print("user chose", music_dir)
         self.ordered_songs = []
         if music_dir is None:
             return
@@ -34,7 +53,6 @@ class SongList(Fl_Hold_Browser):
         self.clear()
         for music_dir, filename in self.ordered_songs:
             self.add(filename, (music_dir, filename))
-
 
     def remove_current_song(self):
         bv = self.value()
@@ -46,7 +64,7 @@ class SongList(Fl_Hold_Browser):
         self.remove(bv)
 
     def hotkeyhot(self):
-        Fl_Text_Display(0,20,300,40, "t = top, b = bot, c = cur")
+        Fl_Text_Display(0, 20, 300, 40, "t = top, b = bot, c = cur")
 
     def play_current_song(self):
         if self.pid != 0:
@@ -55,8 +73,8 @@ class SongList(Fl_Hold_Browser):
         if selected_line == 0:
             return
         self.currently_playing = selected_line
-        print('selected line', selected_line)
-        print('data', self.data(selected_line))
+        print("selected line", selected_line)
+        print("data", self.data(selected_line))
         music_dir, filename = self.data(selected_line)
         self.pid = sp.Popen(["mplayer", os.path.join(music_dir, filename)])
         self.window.yellowb.value(filename)
@@ -87,7 +105,7 @@ class SongList(Fl_Hold_Browser):
         self.play_current_song()
 
     def select_top_song(self):
-        print('should select top song')
+        print("should select top song")
         bv = self.value()
         # self.stop_playing()
         bv = 1
@@ -108,8 +126,10 @@ class SongList(Fl_Hold_Browser):
         self.songs = set()
         self.clear()
 
+
 def playb_cb(wid):
     song_list.play_current_song()
+
 
 def stopb_on_click(widget):
     song_list.stop_playing()
@@ -119,16 +139,19 @@ def close_win(wid):
     song_list.stop_playing()
     wid.hide()
 
+
 def nextb_cb(wid):
     song_list.play_next()
+
 
 def prevb_cb(wid):
     song_list.play_last()
 
+
 class MyWindow(Fl_Window):
     def __init__(self, w, h):
         super().__init__(w, h)
-        print('hullo from init')
+        print("hullo from init")
         self.begin()
         self.group = Fl_Group(0, 0, w, h)
         self.group.begin()
@@ -137,51 +160,59 @@ class MyWindow(Fl_Window):
         self.yellowb = Fl_Output(0, 40, 800, 70)
         self.yellowb.color(FL_YELLOW)
 
+
 win = MyWindow(750, 800)
 song_list = win.song_list
 
 menu = Fl_Menu_Bar(0, 0, 800, 40)
 
+
 def menu_add(menu_item, data):
     song_list.choose_music_dir()
+
 
 def menu_delete(deleteb):
     song_list.remove_current_song()
 
+
 def menu_hotkey(menu_item):
     return
+
 
 def menu_top(menu_item, data):
     song_list.select_top_song()
 
+
 def menu_bottom(menu_item, data):
     song_list.select_bottom_song()
 
+
 def menu_current(menu_item, data):
     song_list.select_current_song()
+
 
 def menu_clear(menu_item, data):
     song_list.clear_all_songs()
 
 
 # def hotkeyup(P):
-    # song_list.select_top_song()
+# song_list.select_top_song()
 
 # def hotkeydown(A):
-    # song_list.select_bottom_song()
+# song_list.select_bottom_song()
 
 # def hotkeycurrent(G):
-    # song_list.select_current_song()
-#menu_hotkey.tooltip(' t for top, b for bottom, c for current')
+# song_list.select_current_song()
+# menu_hotkey.tooltip(' t for top, b for bottom, c for current')
 
 ret = menu.add("menu_add", 0, menu_add, 0, 0)
 # ret = menu.add("hotkeys/remove", ord('d'), menu_delete, 0, 0)
-menu.add("hotkeys/bottom", ord('b'), menu_bottom, 0, 0)
-menu.add("hotkeys/top", ord('t'), menu_top, 0, 0)
-menu.add("hotkeys/current running", ord('c'), menu_current, 0, 0)
+menu.add("hotkeys/bottom", ord("b"), menu_bottom, 0, 0)
+menu.add("hotkeys/top", ord("t"), menu_top, 0, 0)
+menu.add("hotkeys/current running", ord("c"), menu_current, 0, 0)
 # menuhotkey = menu.add("myhotkeys", 0, menu_hotkey)
-menu.add("clear/clear all", ord('A'), menu_clear, 0, 0)
-print('menu.add', ret)
+menu.add("clear/clear all", ord("A"), menu_clear, 0, 0)
+print("menu.add", ret)
 menu.redraw()
 # yellowb = Fl_Hold_Browser(0,40,30,400)
 playb = Fl_Return_Button(150, 710, 150, 90, "@>")
@@ -201,7 +232,7 @@ nextb.tooltip("press n")
 prevb = Fl_Button(0, 710, 150, 90, "@|<")
 prevb.shortcut(ord("l"))
 prevb.tooltip("press l")
-#def general_event(event):
+# def general_event(event):
 #    print('got an event:', event)
 #    if event == FL_SHORTCUT:
 #        key = Fl.event_key()
