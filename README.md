@@ -4,6 +4,7 @@ This is a music playlist made in Python, with a GUI made using pyFLTK.
 This program allows you to add and remove songs from your files, as well as navigate through your curated playlist.
 
 ## Screenshot of Gameplay
+<img width="675" height="743" alt="music-playlist-ss" src="https://github.com/user-attachments/assets/5a6a1ed6-7205-4dbd-8d14-9633e73821a0" />
 
 ## About Project:
 I made this project to learn how to subprocess. I chose to make a music-player because I thought it would be good practice for writing other programs that produce sounds or just call upon external programs. This proved to be a useful endeavor for when I developed my later game of Simon Says.
